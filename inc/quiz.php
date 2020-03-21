@@ -1,7 +1,9 @@
 <?php
-// Start the session
+// Start the session - this is needed to get session variables
+session_start();
 
-// Include questions from the questions.php file
+// Include questions from the generate_questions.php file
+include("generate_questions.php");
 
 // Make a variable to hold the total number of questions to ask
 

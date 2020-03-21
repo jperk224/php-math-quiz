@@ -1,3 +1,10 @@
+<?php
+include("inc/quiz.php");
+
+var_dump($questions);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
