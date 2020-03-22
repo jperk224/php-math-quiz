@@ -17,7 +17,7 @@ if(empty($questionNumber)) {      // page was arrived at w/o a form post from a 
     $questionNumber = 1;
 }
 
-// Array index will be one behind $questionNUmber due to array zero indexing
+// Array index will be one behind $questionNumber due to array zero indexing
 $questionIndex = $questionNumber - 1;
 
 // Dynamically render the current question number in the page title
@@ -26,6 +26,11 @@ $pageTitle = "Math | Question " . $questionNumber . " of " . $numberOfQuestions;
 //var_dump("Question number " . $questionNumber);
 //var_dump("Question index " . $questionIndex);
 // var_dump($questions);
+
+// If question number exceeds the set number of questions, redirect to game over page
+if($questionNumber > $numberOfQuestions) {
+    header("location:game-over.php");
+}
 
 include("inc/header.php");
 
