@@ -53,7 +53,7 @@ for($i = 0; $i < $numberOfQuestions; $i++) {
     $questions[] = array(
         "num1" => $num1,
         "num2" => $num2,
-        "correctAnser" => $correctAnswer,
+        "correctAnswer" => $correctAnswer,
         "firstWrongAnswer" => $firstWrongAnswer,
         "secondWrongAnswer" => $secondWrongAnswer,
     );
