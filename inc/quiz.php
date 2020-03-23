@@ -3,11 +3,6 @@
 // This will create an associative array of random questions
 include("generate_questions.php");
 
-// Start the score at 0, but don't overwrite it if it's already set
-if(!isset($_SESSION["playerScore"])) {
-    $_SESSION["playerScore"] = 0;
-}
-
 // Make a variable to hold the toast message and set it to an empty string
 $toastMessage = "";
 
@@ -21,8 +16,17 @@ $questionNumber = filter_input(INPUT_GET, "questionNumber", FILTER_SANITIZE_NUMB
 
 // If the questionNumber value from form submittion is empty (i.e. not part of form submission)
 // $questionNumber will be empty, so set it to 1 to start the game from the beginning
+// They're coming here from starting a new game, so reset their score
 if(empty($questionNumber)) {        
+    if(isset($_SESSION["playerScore"])) {
+        $_SESSION["playerScore"] = 0;
+    }
     $questionNumber = 1;
+}
+
+// Start the score at 0, but don't overwrite it if it's already set
+if(!isset($_SESSION["playerScore"])) {
+    $_SESSION["playerScore"] = 0;
 }
 
 // Array index will be one behind $questionNumber due to array zero indexing
@@ -41,7 +45,6 @@ if(isset($_POST["answer"])) {
     // since we post to the subsequent question, we should use answer -1 to associate
     // the answer with the appropriate question for which it was entered
     $_SESSION["userAnswer"][$questionNumber - 1] = filter_input(INPUT_POST, "answer", FILTER_SANITIZE_NUMBER_INT);
-    echo("Post Received");  // Test that post was received
 }
 
 // display appropriate toast message based on correct answer

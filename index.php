@@ -8,7 +8,6 @@ include("inc/header.php");
 
 ?>
         <div id="quiz-box">
-            <p class="breadcrumbs"><?php echo $toastMessage; ?></p>
             <p class="breadcrumbs"><?php echo "Question " . $questionNumber . " of " . $numberOfQuestions; ?></p>
             <p class="quiz"><?php echo "What is " . $questions[$questionIndex]["num1"] 
                             . " + " . $questions[$questionIndex]["num2"] . "?"; ?></p>
@@ -18,7 +17,6 @@ include("inc/header.php");
             The logic above will track the quesiton number and answer submission will
             then post to the next question -->
             <?php echo '<form method="post" action="index.php?questionNumber=' . ($questionNumber + 1) . '">'; ?>
-            <?php //echo '<form method="post">'; ?>
             <?php 
             // Randomize the placement of the correct answer to deter cheating :)
             $correctPlacement = rand(1,3);

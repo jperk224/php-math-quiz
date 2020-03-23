@@ -13,6 +13,14 @@ body {
   line-height: .5;
 }
 
+#recap-box {
+  /* position: absolute; */
+  margin-top: 20%;
+  left: 10%;
+  right: 10%;
+  width: 80%;
+}
+
 .quiz {
   font-size: 4rem;
   font-weight: 400;
