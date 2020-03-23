@@ -1,28 +1,79 @@
 <?php
 // Start the session - this is needed before anything else to get session variables
 session_start();
+// Start the score at 0, but don't overwrite it if it's already set
+if(!isset($_SESSION["playerScore"])) {
+    $_SESSION["playerScore"] = 0;
+}
 
 // Include questions from the generate_questions.php file
 // This will create an associative array of random questions
 include("generate_questions.php");
 
-// Make a variable to hold the total number of questions to ask
-
 // Make a variable to hold the toast message and set it to an empty string
+$toastMessage = "";
 
-// Make a variable to determine if the score will be shown or not. Set it to false.
+// Take the questionNumber value passed in the form submission from the post (i.e. user's answer submission)
+// and set it equal to the current $questionNumber to render the associated question in the array.
+// Stepping through the question array by index ensures all questions are rendered and no question is duplicated
+// use filter_sanitize_number int to remove all characters except digits, plus and minus sign.
+// use INPUT_GET b/c we're filtering data pulled from the query string even though method is post (we've appended
+// the form method url below)
+$questionNumber = (int) filter_input(INPUT_GET, "questionNumber", FILTER_SANITIZE_NUMBER_INT);
 
-// Make a variable to hold a random index. Assign null to it.
+// If the questionNumber value from form submittion is empty (i.e. not part of form submission)
+// $questionNumber will be empty, so set it to 1 to start the game from the beginning
+if(empty($questionNumber)) {        
+    $questionNumber = 1;
+}
 
-// Make a variable to hold the current question. Assign null to it.
+// Array index will be one behind $questionNumber due to array zero indexing
+$questionIndex = $questionNumber - 1;
+// Create a session array of correct answers for comparison
+// a new answer should be added with each post to hold the correct answer for 
+// the current question
+$_SESSION["correctAnswer"][$questionNumber] = $questions[$questionIndex]["correctAnswer"];
 
+// check whether user answer is correct and display appropriate toast box
+// Check if a user response has been posted via isset function
+// input text box assigns the user response to the "answer" attribute, this will be the key
+// for the post array
+if(isset($_POST["answer"])) {
+    // add a session variable to store the user's response to the question
+    // since we post to the subsequent question, we should use answer -1 to associate
+    // the answer with the appropriate question for which it was entered
+    $_SESSION["userAnswer"][$questionNumber - 1] = (int) filter_input(INPUT_POST, "answer", FILTER_SANITIZE_NUMBER_INT);
+    echo("Post Received");
+}
+
+// display appropriate toast message based on correct answer
+// if correct, increment player score
+if(isset($_SESSION["userAnswer"][($questionNumber - 1)])) {
+    var_dump($_SESSION["userAnswer"][($questionNumber - 1)] . "<br>", $_SESSION["correctAnswer"][($questionNumber - 1)] . "<br>");
+    var_dump($_SESSION["userAnswer"][($questionNumber - 1)] == $_SESSION["correctAnswer"][($questionNumber)]);
+    if($_SESSION["userAnswer"][($questionNumber - 1)] == $_SESSION["correctAnswer"][($questionNumber)]) {
+        echo "Congratulations!!";
+    //     $_SESSION["playerScore"]++; 
+    }
+    else {
+        echo "Bummer";
+    }
+}
+
+var_dump($questionNumber);
+var_dump($_SESSION);
+
+// If question number exceeds the set number of questions, redirect to game over page
+if($questionNumber > $numberOfQuestions) {
+    header("location:game-over.php");
+}
 
 /*
     If the server request was of type POST
         Check if the user's answer was equal to the correct answer.
         If it was correct:
             1. Assign a congratulutory string to the toast variable
-            2. Ancrement the session variable that holds the total number correct by one.
+            2. Increment the session variable that holds the total number correct by one.
         Otherwise:
             1. Assign a bummer message to the toast variable.
 */

@@ -1,36 +1,8 @@
 <?php
 include("inc/quiz.php");
 
-// Take the questionNumber value passed in the form submission from the post (i.e. user's answer submission)
-// and set it equal to the current $questionNumber to render the associated question in the array.
-// Stepping through the question array by index ensures all questions are rendered and no question is duplicated
-// use filter_sanitize_number int to remove all characters except digits, plus and minus sign.
-// use INPUT_GET b/c we're filtering data pulled from the query string even though method is post (we've appended
-// the form method url below)
-$questionNumber = filter_input(INPUT_GET, "questionNumber", FILTER_SANITIZE_NUMBER_INT);
-
-// If the questionNumber value from form submittion is empty (i.e. not part of form submission)
-// $questionNumber will be empty, so set it to 1 to start the game from the beginning
-if(empty($questionNumber)) {      // page was arrived at w/o a form post from a previous page
-    // // clear session variables
-    // session_destroy();  // unset all session variables at once
-    $questionNumber = 1;
-}
-
-// Array index will be one behind $questionNumber due to array zero indexing
-$questionIndex = $questionNumber - 1;
-
 // Dynamically render the current question number in the page title
 $pageTitle = "Math | Question " . $questionNumber . " of " . $numberOfQuestions;
-
-//var_dump("Question number " . $questionNumber);
-//var_dump("Question index " . $questionIndex);
-// var_dump($questions);
-
-// If question number exceeds the set number of questions, redirect to game over page
-if($questionNumber > $numberOfQuestions) {
-    header("location:game-over.php");
-}
 
 include("inc/header.php");
 
@@ -45,6 +17,7 @@ include("inc/header.php");
             The logic above will track the quesiton number and answer submission will
             then post to the next question -->
             <?php echo '<form method="post" action="index.php?questionNumber=' . ($questionNumber + 1) . '">'; ?>
+            <?php //echo '<form method="post">'; ?>
             <?php 
             // Randomize the placement of the correct answer to deter cheating :)
             $correctPlacement = rand(1,3);
