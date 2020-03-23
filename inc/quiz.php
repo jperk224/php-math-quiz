@@ -48,11 +48,11 @@ if(isset($_POST["answer"])) {
 // if correct, increment player score
 if(isset($_SESSION["userAnswer"][($questionNumber - 1)])) {
     if($_SESSION["userAnswer"][($questionNumber - 1)] == $_SESSION["correctAnswer"][($questionNumber - 1)]) {
-        echo "Congratulations!!";
+        $toastMessage = "Yay! Well done.";
         $_SESSION["playerScore"]++;
     }
     else {
-        echo "Bummer";
+        $toastMessage = "Bummer! Too Bad.";
     }
 }
 
