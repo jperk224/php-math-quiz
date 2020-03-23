@@ -12,7 +12,7 @@ $minOperand = 1;
 $isUnique;
 
 // Declare the empty array to add random questions to
-$questions = array();
+$questionArray = array();
 
 // Loop for required number of questions
 // A for loop is used as the number of iteraitons (i.e. $numberOfQuestions) is known
@@ -27,7 +27,7 @@ for($i = 0; $i < $numberOfQuestions; $i++) {
         // loop through the existing quesitons array, if num1 and num2 in the same element exist, there's
         // already an element with these operands and this iteration is not unique.  
         // Set the flag to false to loop again
-        foreach($questions as $question) {
+        foreach($questionArray as $question) {
             if(($num1 == $question["num1"]) && ($num2 == $question["num2"])) {
                 $isUnique = false;
                 break;      // You've found an existing entry, break out of the loop
@@ -53,7 +53,7 @@ for($i = 0; $i < $numberOfQuestions; $i++) {
   
     // Add question and answer to questions array        
 
-    $questions[] = array(
+    $questionArray[] = array(
         "num1" => $num1,
         "num2" => $num2,
         "correctAnswer" => $correctAnswer,
@@ -61,3 +61,14 @@ for($i = 0; $i < $numberOfQuestions; $i++) {
         "secondWrongAnswer" => $secondWrongAnswer,
     );
 } 
+
+// Create a session array of quesitons
+// While it's storing an extra Session variable server side, without it
+// a new array will be generated with each page load and exposes the chance,
+// albeit with extremely low probability, the same quesiton is generated twice
+if(!isset($_SESSION["questionArray"])) {
+    $_SESSION["questionArray"] = array();
+    foreach($questionArray as $question) {
+        $_SESSION["questionArray"][] = $question;
+    }
+}

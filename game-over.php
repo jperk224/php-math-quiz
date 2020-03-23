@@ -16,7 +16,7 @@ include('inc/footer.php');
         I am duplicating the id across files.  When I changed the id to a class, the styling
         was lost on both pages.  Troubleshooting the CSS to solve this is beyond the scope of this
         project.  I've also used inline styling below, as CSS standards and best practices are
-        also betond the scope of this project -->
+        also beyond the scope of this project -->
         <div id="quiz-box" style="line-height: 1.5;">
             <p class="breadcrumbs"><?php echo "Game Over - Your final score is " . $_SESSION["playerScore"]; ?></p>
             <form method="post" action="index.php">
@@ -45,3 +45,4 @@ include('inc/footer.php');
             <input type="submit" class="btn" value="Play Again?">
             </form>
         </div> <!-- end quiz-box div -->
+        
