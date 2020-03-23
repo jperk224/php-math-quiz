@@ -2,4 +2,7 @@
 
 ## Treehouse Techdegree Project 2
 
-* CSS files is mainly provided starter code
+* CSS file is pre-provided starter code
+* CSS changes in the html directly are written by me :)
+
+Thanks for stopping by!
