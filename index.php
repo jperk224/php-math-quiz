@@ -8,6 +8,7 @@ include("inc/header.php");
 
 ?>
         <div id="quiz-box">
+            <p class="breadcrumbs"><?php echo $toastMessage; ?></p>
             <p class="breadcrumbs"><?php echo "Question " . $questionNumber . " of " . $numberOfQuestions; ?></p>
             <p class="quiz"><?php echo "What is " . $questions[$questionIndex]["num1"] 
                             . " + " . $questions[$questionIndex]["num2"] . "?"; ?></p>
