@@ -1,4 +1,7 @@
 <?php
+// Start the session - this is needed before anything else to get session variables
+session_start();
+
 // Generate random questions
 // Declare the number of questions
 $numberOfQuestions = 10;

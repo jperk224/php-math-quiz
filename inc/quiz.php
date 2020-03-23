@@ -1,14 +1,12 @@
 <?php
-// Start the session - this is needed before anything else to get session variables
-session_start();
+// Include questions from the generate_questions.php file
+// This will create an associative array of random questions
+include("generate_questions.php");
+
 // Start the score at 0, but don't overwrite it if it's already set
 if(!isset($_SESSION["playerScore"])) {
     $_SESSION["playerScore"] = 0;
 }
-
-// Include questions from the generate_questions.php file
-// This will create an associative array of random questions
-include("generate_questions.php");
 
 // Make a variable to hold the toast message and set it to an empty string
 $toastMessage = "";
@@ -19,7 +17,7 @@ $toastMessage = "";
 // use filter_sanitize_number int to remove all characters except digits, plus and minus sign.
 // use INPUT_GET b/c we're filtering data pulled from the query string even though method is post (we've appended
 // the form method url below)
-$questionNumber = (int) filter_input(INPUT_GET, "questionNumber", FILTER_SANITIZE_NUMBER_INT);
+$questionNumber = filter_input(INPUT_GET, "questionNumber", FILTER_SANITIZE_NUMBER_INT);
 
 // If the questionNumber value from form submittion is empty (i.e. not part of form submission)
 // $questionNumber will be empty, so set it to 1 to start the game from the beginning
@@ -42,26 +40,23 @@ if(isset($_POST["answer"])) {
     // add a session variable to store the user's response to the question
     // since we post to the subsequent question, we should use answer -1 to associate
     // the answer with the appropriate question for which it was entered
-    $_SESSION["userAnswer"][$questionNumber - 1] = (int) filter_input(INPUT_POST, "answer", FILTER_SANITIZE_NUMBER_INT);
-    echo("Post Received");
+    $_SESSION["userAnswer"][$questionNumber - 1] = filter_input(INPUT_POST, "answer", FILTER_SANITIZE_NUMBER_INT);
+    echo("Post Received");  // Test that post was received
 }
 
 // display appropriate toast message based on correct answer
 // if correct, increment player score
 if(isset($_SESSION["userAnswer"][($questionNumber - 1)])) {
-    var_dump($_SESSION["userAnswer"][($questionNumber - 1)] . "<br>", $_SESSION["correctAnswer"][($questionNumber - 1)] . "<br>");
-    var_dump($_SESSION["userAnswer"][($questionNumber - 1)] == $_SESSION["correctAnswer"][($questionNumber)]);
-    if($_SESSION["userAnswer"][($questionNumber - 1)] == $_SESSION["correctAnswer"][($questionNumber)]) {
+    if($_SESSION["userAnswer"][($questionNumber - 1)] == $_SESSION["correctAnswer"][($questionNumber - 1)]) {
         echo "Congratulations!!";
-    //     $_SESSION["playerScore"]++; 
+        $_SESSION["playerScore"]++;
     }
     else {
         echo "Bummer";
     }
 }
 
-var_dump($questionNumber);
-var_dump($_SESSION);
+// var_dump($_SESSION);
 
 // If question number exceeds the set number of questions, redirect to game over page
 if($questionNumber > $numberOfQuestions) {

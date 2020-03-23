@@ -1,5 +1,8 @@
 <?php
-$pageTitle = "Game Over. Final Score: XX";
+// Start the session - this is needed before anything else to get session variables
+session_start();
+
+$pageTitle = "Game Over. Final Score: " . $_SESSION["playerScore"];
 
 include('inc/header.php');
 
