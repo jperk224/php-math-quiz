@@ -12,8 +12,6 @@ function cssApplicator($selector, $property, $value) {
 // schemes taken from triadic color theory
 // (https://www.canva.com/colors/color-wheel/)
 // Shades adjusted to keep contrast raio greater than 3.0
-// 2. Main: #32CDBD Button: #BD32CD Font: #FFF
-// 3. Main: #43bc91 Button: #BC9143 Font: #FFF
 
 
 // Display one of 3 schemes based on randomization
